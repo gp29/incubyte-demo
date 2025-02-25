@@ -12,13 +12,14 @@ class StringCalculator extends Component {
     }
 
     add(){
-        let sumValue = ''
+        let sumValue = 0
         let textValue = this.state.textValue
         if(!textValue){
             sumValue = 0
         }
-        let delimiter = /,/;
-        sumValue = textValue.split(delimiter).map(Number).reduce((sum, num) => sum + num, 0);
+        let delimiter = /[/n,]+/
+        const numArray = textValue.split(delimiter).map(num => parseFloat(num) || 0);
+        sumValue = numArray.reduce((sum, num) => sum + num, 0);
         this.setState({sumValue, showResult: true})    
     }
 
@@ -26,7 +27,7 @@ class StringCalculator extends Component {
       return (
         <div className="App">
             <header className="App-header">
-                <input type="text" placeHolder="Type your string.." value={this.state.textValue} onChange={(e)=> this.setState({textValue: e.target.value})} />
+                <input type="text" placeholder="Type your string.." value={this.state.textValue} onChange={(e)=> this.setState({textValue: e.target.value})} />
                 <button type="submit" onClick={this.add.bind(this)}>Submit</button>
                 {
                     this.state.showResult ? 
