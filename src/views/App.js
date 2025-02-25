@@ -18,12 +18,13 @@ class StringCalculator extends Component {
             sumValue = 0
         }
         let delimiter = /[/n,;]+/
-        const numArray = textValue.split(delimiter).map(num => parseFloat(num) || 0);
+        let numArray = textValue.split(delimiter).map(num => parseFloat(num) || 0);
         const negatives = numArray.filter(num => num < 0);
         if (negatives.length) {
             alert(`Negative numbers not allowed: ${negatives.join(", ")}`);
             return;
         }
+        numArray = numArray.filter((x) => x < 1000)
         sumValue = numArray.reduce((sum, num) => sum + num, 0);
         this.setState({sumValue, showResult: true})    
     }
